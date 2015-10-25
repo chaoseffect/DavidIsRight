@@ -1,0 +1,63 @@
+<html>
+<head>
+<script src='https://connect.humanapi.co/connect.js'></script>
+</head>
+<body>
+<img id='connect-health-data-btn' src='https://connect.humanapi.co/assets/button/blue.png'/>
+
+<script>
+var connectBtn = document.getElementById('connect-health-data-btn');
+connectBtn.addEventListener('click', function(e) {
+
+    var options = {
+      publicToken: '2533f76cd75490224dadbf72f64d18a5',
+      clientUserId: encodeURIComponent('fddsfgdfs'), // can be email
+     // clientUserId: encodeURIComponent('tester'), // can be email
+      clientId: '54b593082175db912c695ac6ac56fd950af14450', // found in Developer Portal
+      finish: function(err, sessionTokenObject) {
+        // callback that would be called after user finishes 
+        // connecting data.
+        
+        // you need to post `sessionTokenObject` to your server
+        // append `clientSecret` to it and send it to our server.
+        // sending POST request with jQuery might look like this.
+        // NOTE: it's not necessary to use jQuery
+        $.post('https://script.google.com/macros/s/AKfycbxazm4SQjPK1HkbbiDbi9qFTCTaCYI2sF9B2t8hOxI9eDgjxOPA/exec', sessionTokenObject, function(res){
+        // handle server response here
+        });
+          location.reload();
+          
+      },
+      close: function() {
+          $.ajax({
+ url: "https://api.humanapi.co/v1/human/activities?access_token=0v7ku_4aApmrlEo328Ai-dejCIo=4cNDTIarb7674c8be7bc4a33aa315e3ccad73955ac15c2996536f0f1fa6086a29ac6df7722011d0c8111dcd83364b9d4cb065442ee90340707d09ee74ffaac6056c08772e79742619c061d186524a6f5c39a2de26a2cace3a82af47be2ab273d66801a88b9f8ee00214a5014550de9742c45b7ab",
+ type: 'GET',
+ dataType: 'json',
+ contentType: 'application/json',
+ processData: false,
+ success: function (data) {
+  alert(JSON.stringify(data));
+},
+  error: function(){
+   alert("Cannot get data");
+ }
+});
+        // optional callback that will be called if the user 
+        // closes the popup without connecting any data sources.
+      },
+      error: function(err) {
+        // optional callback that will be called if an error occurs while 
+        // loading the popup.
+        // `err` is an object with the fields: `code`, `message`, `detailedMessage`
+      }  
+    }
+
+                            
+HumanConnect.open(options);
+    });
+    
+    
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<html>
+<head>
+<script src='https://connect.humanapi.co/connect.js'></script>
+
+</head>
+<body>
+
+<form>
+  E-mail address: <input type="text" id="fname"><br>
+
+</form>
+
+
+<script>
+
+function myFunction(){
+ 
+    var email = document.getElementById('fname').value;
+    localStorage.setItem("email", email);
+//    alert(email);
+  //      $.post('poster.php', email);
+//var xmlhttp = new XMLHttpRequest();
+//xmlhttp.open("GET","poster.php?q=2",true);
+//        xmlhttp.send();
+    var options = {
+      clientUserId: encodeURIComponent(email), // can be email
+      clientId: '54b593082175db912c695ac6ac56fd950af14450', // found in Developer Portal
+      modal: 1,
+      finish: function(err, sessionTokenObject) {
+        // callback that would be called after user finishes
+        // connecting data.
+        //alert(JSON.stringify(sessionTokenObject));
+        var jsonresponse = JSON.stringify(sessionTokenObject);
+        var token = JSON.parse(jsonresponse);
+        alert(jsonresponse);
+        //alert(token.sessionToken);
+        localStorage.setItem("token", token.sessionToken);
+        location.reload();
+
+//4842314b89f7c5fe693523876ccfca1d
+        // you need to post `sessionTokenObject` to your server
+        // append `clientSecret` to it and send it to our server.
+        // sending POST request with jQuery might look like this.
+        // NOTE: it's not necessary to use jQuery
+        //$.post('/authenticate.js', sessionTokenObject, function(res){
+        // handle server response here
+        //});
+      },
+      close: function() {
+        // optional callback that will be called if the user
+        // closes the popup without connecting any data sources.
+      },
+      error: function(err) {
+        // optional callback that will be called if an error occurs while
+        // loading the popup.
+        // `err` is an object with the fields: `code`, `message`, `detailedMessage`
+      }
+    }
+HumanConnect.open(options);
+
+
+//jQuery.ajax( {
+//    url: 'https://user.humanapi.co/v1/connect/tokens',
+//    type: 'POST',
+//    json: token + '5d20238ceb4b2f5cffddd71c64b1b476d16bb',
+//   
+//    success: function( response ) {
+//        // response
+//    }
+}
+
+
+</script>
+
+<img id='connect-health-data-btn' src='https://connect.humanapi.co/assets/button/blue.png' onclick="myFunction()">
+
+
+
+
+</body>
+</html>
